@@ -1,0 +1,19 @@
+<p>cadastro works!</p>
+
+<div class="container">
+  <h2>Cadastro de Usuário</h2>
+  
+  <form (ngSubmit)="cadastrar()">
+    <label for="login">Login</label>
+    <input type="text" id="login" [(ngModel)]="usuario.login" name="login" required>
+
+    <label for="senha">Senha</label>
+    <input type="password" id="senha" [(ngModel)]="usuario.senha" name="senha" required>
+
+    <button type="submit">Cadastrar</button>
+  </form>
+
+  <p class="mensagem">{{ mensagem }}</p>
+
+  <p>Já tem conta? <a [routerLink]="['/']">Voltar para o login</a></p>
+</div>
