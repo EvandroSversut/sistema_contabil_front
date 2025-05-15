@@ -19,25 +19,30 @@ export class LoginComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
   fazerLogin() {
-  console.log('Enviando para o back-end:', this.login, this.senha);
-  console.log('🔵 Iniciando login no Angular...');
-  console.time('⏱️ Tempo total do login (Angular)');
+    console.log('Enviando para o back-end:', this.login, this.senha);
+    console.log('🔵 Iniciando login no Angular...');
+    console.time('⏱️ Tempo total do login (Angular)');
 
-  this.http.post('http://localhost:8080/api/login', {
-    login: this.login,
-    senha: this.senha
-  }, { responseType: 'text' }).subscribe({
-    next: (res) => {
-      alert(res); // Mostra "Login realizado com sucesso!"
-      console.log('✅ Login realizado com sucesso:', res);
-      console.timeEnd('⏱️ Tempo total do login (Angular)');
-    },
-    error: (err) => {
-      console.error('Erro:', err);
-      this.mensagemErro = 'Login ou senha inválidos!';
-       console.error('❌ Erro ao fazer login:', err);
-      console.timeEnd('⏱️ Tempo total do login (Angular)');
-    }
-  });
-}
+    this.http.post<{ token: string }>('http://localhost:8080/api/login', {
+      login: this.login,
+      senha: this.senha
+    }).subscribe({
+      next: (res) => {
+        console.log('✅ Token recebido:', res.token);
+
+        // Salva o token no localStorage
+        localStorage.setItem('token', res.token);
+
+        // Redireciona para a próxima tela
+        this.router.navigate(['/home']);
+
+        console.timeEnd('⏱️ Tempo total do login (Angular)');
+      },
+      error: (err) => {
+        console.error('❌ Erro ao fazer login:', err);
+        this.mensagemErro = 'Login ou senha inválidos!';
+        console.timeEnd('⏱️ Tempo total do login (Angular)');
+      }
+    });
+  }
 }

@@ -33,4 +33,7 @@ export class CadastroComponent {
         error: () => this.mensagem = 'Erro ao cadastrar'
       });
   }
+
+  
 }
+
