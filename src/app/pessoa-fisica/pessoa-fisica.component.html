@@ -1,0 +1,16 @@
+<h2>Cadastro de Pessoa Física</h2>
+
+<form (ngSubmit)="salvarPessoaFisica()">
+  <label>Nome:</label>
+  <input type="text" [(ngModel)]="pessoa.nome" name="nome" required>
+
+  <label>CPF:</label>
+  <input type="text" [(ngModel)]="pessoa.cpf" name="cpf" required>
+
+  <label>Email:</label>
+  <input type="email" [(ngModel)]="pessoa.email" name="email" required>
+
+  <button type="submit">Salvar</button>
+</form>
+
+<p>{{ mensagem }}</p>
