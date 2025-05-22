@@ -17,7 +17,11 @@ export class PessoaFisicaComponent {
   pessoa: PessoaFisica = {
     nome: '',
     cpf: '' ,
-    email: ''
+    rg: '',
+    estadoCivil: '',
+    email: '',
+    telefone: '',
+    endereco:''
   };
 
   mensagem = '';
@@ -46,8 +50,9 @@ export class PessoaFisicaComponent {
            // Redireciona para o formulário de cadastro de usuário com o ID da pessoa
            // Esse res será o objeto PessoaFisica retornado pelo back-end, 
            // com o campo id preenchido. O Angular redireciona para /cadastro/{idPessoa}.
-          setTimeout(() => this.router.navigate(['/cadastro']), 1500);  // redireciona para tela de usuário
-          } else {
+          //setTimeout(() => this.router.navigate(['/']), 1500);  // redireciona para tela de usuário
+          this.router.navigate(['/']); // redireciona para a rota de login
+        } else {
             this.mensagem = 'Erro: ID da pessoa não retornado!';
           }
         },
@@ -56,6 +61,8 @@ export class PessoaFisicaComponent {
           this.mensagem = err.error; // "E-mail já cadastrado!"
       } else {
         this.mensagem = "Erro ao cadastrar Pessoa Fisica";
+        console.error('❌ Erro ao cadastrar:', err);
+        alert('Erro ao cadastrar. Verifique os dados e tente novamente.');
       }
     }
     });

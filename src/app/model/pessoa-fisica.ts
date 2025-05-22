@@ -1,6 +1,9 @@
-export interface PessoaFisica {
-  id?: number;
-  nome: string;
+import { Pessoa } from "./pessoa";
+
+export interface PessoaFisica extends Pessoa {
+
+  //id?: number;
   cpf: string;
-  email: string;
+  rg: string;
+  estadoCivil: string;
 }

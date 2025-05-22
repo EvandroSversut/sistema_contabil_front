@@ -12,6 +12,7 @@ export class PessoaFisicaService {
   salvar(pessoa: PessoaFisica): Observable<PessoaFisica> {
     console.log('Enviando para o back-end:', pessoa.cpf);
     console.log('Enviando para o back-end:', pessoa.email);
+    console.log('📦 Enviando pessoa para o back-end:', JSON.stringify(pessoa, null, 2));
     return this.http.post<PessoaFisica>(this.apiUrl, pessoa);
   }
 

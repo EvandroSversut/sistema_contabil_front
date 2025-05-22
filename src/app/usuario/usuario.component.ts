@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { PessoaUsuarioService } from '../service/pessoa-usuario';
+import { PessoaUsuario } from '../model/pessoa-usuario';
 
 @Component({
   selector: 'app-usuario',
@@ -12,40 +14,50 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   styleUrls: ['./usuario.component.css']
 })
 export class UsuarioComponent {
-  usuario = {
-    login: '',
-    senha: '',
-    pessoa: {
-      id: 0
-    }
-  };
+  dados: PessoaUsuario = {
+    nome: '',
+    cpf: '',
+    rg: '',
+    telefone: '',
+    rua: '',
+    numero: '',
+    email: '',
+    senha: ''
+    };
 
-  mensagem = '';
+  mensagemErro = '';
 
   constructor(
-  private http: HttpClient,
-  private router: Router,
-  private route: ActivatedRoute
-) {
+    private service: PessoaUsuarioService,
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute
+) { }
+  /*
   const idPessoa = Number(this.route.snapshot.paramMap.get('idPessoa'));
   if (idPessoa) {
     this.usuario.pessoa.id = idPessoa;
   }
 }
-
-  cadastrar() {
-    this.http.post('http://localhost:8080/api/login/criar-usuario', this.usuario, { responseType: 'text' })
-      .subscribe({
-        next: (res) => {
-          this.mensagem = res;
-          if (res === 'Usuário cadastrado com sucesso!') {
-            setTimeout(() => this.router.navigate(['/']), 1500);
-          }
-        },
-        error: () => this.mensagem = 'Erro ao cadastrar'
-      });
+*/
+  salvar() {
+    this.service.cadastrar(this.dados).subscribe({
+       
+        next: msg => {
+          alert(msg);
+          this.router.navigate(['/']); // Vai para o login
+         },
+        error: err => {
+          if(err.status === 409){
+            // Mensagem enviada pelo back-end no body (ex: "CPF já cadastrado.")
+            this.mensagemErro = err.error;
+          } else {
+        console.error('Erro:', err);
+        alert('Erro ao cadastrar. Verifique os dados.');
+        this.mensagemErro = err.error; // <-- aqui vem "CPF já está em uso."
+        this.mensagemErro = 'Erro ao realizar cadastro. Tente novamente.';   
+      }
+    }
+    });
   }
-
-  
-}
-
+} 

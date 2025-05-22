@@ -16,10 +16,10 @@ bootstrapApplication(AppComponent, {
     ),
     provideRouter([
       { path: '', component: LoginComponent },
-      { path: 'usuario/:idPessoa', component: UsuarioComponent },
+     // { path: 'usuario/:idPessoa', component: UsuarioComponent },
       { path: 'home', component: HomeComponent }, // 👈 aqui
       { path: 'pessoa-fisica', component: PessoaFisicaComponent }, // 👈 adicione esta rota
-     // { path: 'cadastro', component: CadastroComponent } // 👈 opcional, se tiver tela de cadastro separada
+      { path: 'usuario', component: UsuarioComponent } // 👈 opcional, se tiver tela de cadastro separada
     ])
   ]
 });
