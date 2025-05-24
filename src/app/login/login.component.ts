@@ -24,7 +24,7 @@ export class LoginComponent {
     console.time('⏱️ Tempo total do login (Angular)');
 
     this.http.post<{ token: string }>('http://localhost:8080/api/login', {
-      login: this.login,
+      email: this.login,
       senha: this.senha
     }).subscribe({
       next: (res) => {
