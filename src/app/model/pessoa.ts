@@ -5,5 +5,12 @@ export class Pessoa {
   nome!: string;
   email!: string;
   telefone!: string;
-  endereco!: string
+  rua!: string;
+  numero!: string;
+  complemento!: string;
+  bairro!: string;
+  cep!: string;
+  cidade!: string;
+  uf!: string;
+
 }

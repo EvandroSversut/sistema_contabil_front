@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { PessoaUsuarioService } from '../service/pessoa-usuario';
-import { PessoaUsuario } from '../model/pessoa-usuario';
+import { PessoaUsuarioService } from '../../services/pessoa-usuario';
+import { PessoaUsuario } from '../../model/pessoa-usuario';
 
 @Component({
   selector: 'app-usuario',
@@ -21,6 +21,11 @@ export class UsuarioComponent {
     telefone: '',
     rua: '',
     numero: '',
+    complemento: '',
+    bairro: '',
+    cep: '',
+    cidade: '',
+    uf: '',
     email: '',
     senha: ''
     };

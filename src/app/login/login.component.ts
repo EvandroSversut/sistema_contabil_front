@@ -34,7 +34,7 @@ export class LoginComponent {
         localStorage.setItem('token', res.token);
 
         // Redireciona para a próxima tela
-        this.router.navigate(['/pessoa-fisica']);
+        this.router.navigate(['/home']);
 
         console.timeEnd('⏱️ Tempo total do login (Angular)');
       },

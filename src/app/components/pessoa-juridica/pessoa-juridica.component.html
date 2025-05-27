@@ -1,0 +1,14 @@
+<h2>Cadastro de Pessoa Juridica</h2>
+
+<form (ngSubmit)="salvarPessoaJuridica()">
+  <label>Razao Social:</label>
+  <input type="text" [(ngModel)]="pessoaJud.razaoSocial" name="razaosocial" required>
+
+  <label>Cnpj:</label>
+  <input type="text" [(ngModel)]="pessoaJud.cnpj" name="cnpj" required>
+
+    
+  <button type="submit">Salvar</button>
+</form>
+
+<p>{{ mensagem }}</p>

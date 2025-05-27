@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { PessoaFisica } from '../model/pessoa-fisica';
-import { PessoaFisicaService } from '../service/pessoa-fisica.service';
+import { PessoaFisica } from '../../model/pessoa-fisica';
+import { PessoaFisicaService } from '../../services/pessoa-fisica.service';
 
 @Component({
   selector: 'app-pessoa-fisica',
@@ -19,9 +19,16 @@ export class PessoaFisicaComponent {
     cpf: '' ,
     rg: '',
     estadoCivil: '',
+    rua: '',
+    numero: '',
+    complemento: '',
+    bairro: '',
+    cep: '',
+    cidade: '',
+    uf: '',
     email: '',
-    telefone: '',
-    endereco:''
+    telefone: ''
+    
   };
 
   mensagem = '';
