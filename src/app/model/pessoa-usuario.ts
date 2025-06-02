@@ -11,18 +11,19 @@ Aqui não está “unificando entidades”. Está preenchendo uma única tela
 
 
 export interface PessoaUsuario {
-  nome: string;        // vem da classe pessoa
-  cpf: string;         // vem da classe pessoafisica
-  rg: string;          // vem da classe pessoafisica
-  telefone: string;    // vem da classe pessoa
-  rua: string;         // vem da classe pessoa
-  numero: string;      // vem da classe pessoa
-  complemento: string; // vem da classe pessoa
-  bairro: string;      // vem da classe pessoa
-  cep: string;         // vem da classe pessoa
-  cidade: string;      // vem da classe pessoa
-  uf: string;          // vem da classe pessoa
-  // email - login     
   email: string;      // vem da classe usuario
   senha: string;      // vem da classe usuario
+  nome: string;        // vem da classe pessoa
+  cpf: string;         // vem da classe pessoafisica
+  //rg: string;          // vem da classe pessoafisica
+  telefone: string;    // vem da classe pessoa
+  //rua: string;         // vem da classe pessoa
+  //numero: string;      // vem da classe pessoa
+  //complemento: string; // vem da classe pessoa
+  //bairro: string;      // vem da classe pessoa
+  //cep: string;         // vem da classe pessoa
+  //cidade: string;      // vem da classe pessoa
+ // uf: string;          // vem da classe pessoa
+  // email - login     
+  
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Router } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { PessoaFisica } from '../../model/pessoa-fisica';
 import { PessoaFisicaService } from '../../services/pessoa-fisica.service';
 
@@ -14,66 +14,122 @@ import { PessoaFisicaService } from '../../services/pessoa-fisica.service';
   styleUrls: ['./pessoa-fisica.component.css']
 })
 export class PessoaFisicaComponent {
-  pessoa: PessoaFisica = {
-    nome: '',
-    cpf: '' ,
-    rg: '',
-    estadoCivil: '',
-    rua: '',
-    numero: '',
-    complemento: '',
-    bairro: '',
-    cep: '',
-    cidade: '',
-    uf: '',
-    email: '',
-    telefone: ''
-    
-  };
 
-  mensagem = '';
+  pessoa: PessoaFisica = this.novaPessoa();
 
-  constructor(private service: PessoaFisicaService, http: HttpClient, private router: Router) {}
+  usuarios: any[] = [];
+  filtro: string = '';
+  mensagemErro = '';
 
-  /*
-  cadastrar() {
-    this.http.post('http://localhost:8080/api/login/criar-usuario', this.usuario, { responseType: 'text' })
-      .subscribe({
-        next: (res) => {
-          this.mensagem = res;
-          if (res === 'Usuário cadastrado com sucesso!') {
-            setTimeout(() => this.router.navigate(['/']), 1500);
-          }
-        },
-        error: () => this.mensagem = 'Erro ao cadastrar'
-      });
+  constructor(
+    private service: PessoaFisicaService,
+    private router: Router
+  ) {}
+
+  ngOnInit() {
+    this.buscar();
   }
-*/
-    salvarPessoaFisica() {
-    this.service.salvar(this.pessoa).subscribe({
+
+  // 🔹 Salvar ou Atualizar
+  salvarPessoaFisica() {
+    if (this.pessoa.id) {
+      this.service.atualizar(this.pessoa).subscribe({
+        next: () => {
+          this.mensagemErro = 'Pessoa Física atualizada com sucesso!';
+          this.buscar();
+          this.limparFormulario();
+        },
+        error: (err) => this.tratarErro(err)
+      });
+    } else {
+      this.service.salvar(this.pessoa).subscribe({
         next: (res) => {
-          if(res?.id){
-          this.mensagem = 'Pessoa Fisica Cadastrada com Sucesso !!';
-           // Redireciona para o formulário de cadastro de usuário com o ID da pessoa
-           // Esse res será o objeto PessoaFisica retornado pelo back-end, 
-           // com o campo id preenchido. O Angular redireciona para /cadastro/{idPessoa}.
-          //setTimeout(() => this.router.navigate(['/']), 1500);  // redireciona para tela de usuário
-          this.router.navigate(['/']); // redireciona para a rota de login
-        } else {
-            this.mensagem = 'Erro: ID da pessoa não retornado!';
+          if (res?.id) {
+            this.mensagemErro = 'Pessoa Física cadastrada com sucesso!';
+            this.buscar();
+            this.limparFormulario();
+          } else {
+            this.mensagemErro = 'Erro: ID da pessoa não retornado!';
           }
         },
-        error: err => {
-          if (err.status === 409) {
-          this.mensagem = err.error; // "E-mail já cadastrado!"
-      } else {
-        this.mensagem = "Erro ao cadastrar Pessoa Fisica";
-        console.error('❌ Erro ao cadastrar:', err);
-        alert('Erro ao cadastrar. Verifique os dados e tente novamente.');
-      }
+        error: (err) => this.tratarErro(err)
+      });
     }
+  }
+
+  // 🔍 Buscar pessoas
+  buscar() {
+    this.service.buscar(this.filtro).subscribe({
+      next: res => {
+        this.usuarios = res;
+        this.mensagemErro = '';
+      },
+      error: err => {
+        this.mensagemErro = 'Erro ao buscar usuários.';
+        console.error(err);
+      }
     });
   }
+
+  // ✏️ Editar
+  editar(pessoa: PessoaFisica) {
+    this.pessoa = { ...pessoa };
+  }
+
+  // 🗑️ Excluir
+  excluir(id: number) {
+    if (confirm('Tem certeza que deseja excluir este usuário?')) {
+      this.service.excluir(id).subscribe({
+        next: () => {
+          alert('Usuário excluído com sucesso!');
+          this.buscar();
+        },
+        error: err => {
+          console.error(err);
+          alert('Erro ao excluir usuário.');
+        }
+      });
+    }
+  }
+
+  // ➕ Novo
+  novo() {
+    this.limparFormulario();
+  }
+
+  // 🚫 Limpar formulário
+  limparFormulario() {
+    this.pessoa = this.novaPessoa();
+  }
+
+  // 🔧 Tratamento de erros
+  tratarErro(err: any) {
+    if (err.status === 409) {
+      this.mensagemErro = err.error;
+    } else {
+      this.mensagemErro = 'Erro ao salvar Pessoa Física';
+      console.error(err);
+      alert('Erro. Verifique os dados e tente novamente.');
+    }
+  }
+
+  // 🧠 Cria um novo objeto PessoaFisica vazio
+  novaPessoa(): PessoaFisica {
+    return {
+      id: undefined,
+      nome: '',
+      cpf: '',
+      rg: '',
+      estadoCivil: '',
+      rua: '',
+      numero: '',
+      complemento: '',
+      bairro: '',
+      cep: '',
+      cidade: '',
+      uf: '',
+      email: '',
+      telefone: ''
+    };
+  }
 }
-
-

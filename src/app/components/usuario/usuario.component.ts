@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterModule, Router, ActivatedRoute } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { PessoaUsuarioService } from '../../services/pessoa-usuario';
-import { PessoaUsuario } from '../../model/pessoa-usuario';
+import { PessoaFisica } from '../../model/pessoa-fisica';
+import { PessoaFisicaService } from '../../services/pessoa-fisica.service';
+import { Usuario } from '../../model/usuario';
 
 @Component({
   selector: 'app-usuario',
@@ -14,7 +15,8 @@ import { PessoaUsuario } from '../../model/pessoa-usuario';
   styleUrls: ['./usuario.component.css']
 })
 export class UsuarioComponent {
-  dados: PessoaUsuario = {
+
+    cadastro = {
     nome: '',
     cpf: '',
     rg: '',
@@ -28,41 +30,29 @@ export class UsuarioComponent {
     uf: '',
     email: '',
     senha: ''
-    };
+  };
 
-  mensagemErro = '';
+   mensagemErro = '';
 
   constructor(
-    private service: PessoaUsuarioService,
-    private http: HttpClient,
-    private router: Router,
-    private route: ActivatedRoute
-) { }
-  /*
-  const idPessoa = Number(this.route.snapshot.paramMap.get('idPessoa'));
-  if (idPessoa) {
-    this.usuario.pessoa.id = idPessoa;
+    private http: HttpClient
+  ) {}
+
+  // 🔹 Salvar Cadastro
+  salvarCadastro() {
+    this.http.post('http://localhost:8080/api/cadastro', this.cadastro)
+      .subscribe({
+        next: () => {
+          alert('Cadastro realizado com sucesso!');
+          this.cadastro = {
+            nome: '', cpf: '', rg: '', telefone: '', rua: '', numero: '',
+            complemento:'',bairro: '', cep: '', cidade: '', uf: '', email: '', senha: ''
+          };
+        },
+        error: (err) => {
+          this.mensagemErro = 'Erro ao cadastrar';
+          console.error(err);
+        }
+      });
   }
 }
-*/
-  salvar() {
-    this.service.cadastrar(this.dados).subscribe({
-       
-        next: msg => {
-          alert(msg);
-          this.router.navigate(['/']); // Vai para o login
-         },
-        error: err => {
-          if(err.status === 409){
-            // Mensagem enviada pelo back-end no body (ex: "CPF já cadastrado.")
-            this.mensagemErro = err.error;
-          } else {
-        console.error('Erro:', err);
-        alert('Erro ao cadastrar. Verifique os dados.');
-        this.mensagemErro = err.error; // <-- aqui vem "CPF já está em uso."
-        this.mensagemErro = 'Erro ao realizar cadastro. Tente novamente.';   
-      }
-    }
-    });
-  }
-} 
