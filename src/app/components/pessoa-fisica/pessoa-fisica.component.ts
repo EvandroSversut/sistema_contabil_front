@@ -120,7 +120,7 @@ export class PessoaFisicaComponent {
       nome: '',
       cpf: '',
       rg: '',
-      estadoCivil: '',
+      //estadoCivil: '',
       rua: '',
       numero: '',
       complemento: '',
