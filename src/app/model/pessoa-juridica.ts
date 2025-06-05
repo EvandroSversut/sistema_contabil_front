@@ -1,4 +1,4 @@
-import { Pessoa } from "./pessoa";
+import { Pessoa } from "./pessoa.model";
 
 export interface PessoaJuridica extends Pessoa {
 

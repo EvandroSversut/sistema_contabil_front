@@ -6,7 +6,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { PessoaFisica } from '../../model/pessoa-fisica';
 import { PessoaFisicaService } from '../../services/pessoa-fisica.service';
 import { PessoaJuridica } from '../../model/pessoa-juridica';
-import { Pessoa } from '../../model/pessoa';
+import { Pessoa } from '../../model/pessoa.model';
 import { PessoaJuridicaService } from '../../services/pessoa-juridica.service';
 
 @Component({

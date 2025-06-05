@@ -5,7 +5,7 @@ import { RouterModule, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { PessoaFisica } from '../../model/pessoa-fisica';
 import { PessoaFisicaService } from '../../services/pessoa-fisica.service';
-import { Usuario } from '../../model/usuario';
+import { Usuario } from '../../model/usuario.model';
 
 @Component({
   selector: 'app-usuario',
@@ -40,7 +40,7 @@ export class UsuarioComponent {
 
   // 🔹 Salvar Cadastro
   salvarCadastro() {
-    this.http.post('http://localhost:8080/api/cadastro', this.cadastro)
+    this.http.post('http://localhost:8080/api/criar-usuario', this.cadastro)
       .subscribe({
         next: () => {
           alert('Cadastro realizado com sucesso!');

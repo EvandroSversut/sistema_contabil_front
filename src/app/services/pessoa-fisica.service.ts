@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class PessoaFisicaService {
   private apiUrl = 'http://localhost:8080/api/cadastro';
+  private apiBuscar = 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) {}
 
@@ -30,8 +31,8 @@ export class PessoaFisicaService {
   // pessoa-fisica.service.ts
 buscar(filtro: string) {
   const url = filtro 
-    ? `${this.apiUrl}/buscar?filtro=${filtro}`
-    : `${this.apiUrl}/listar`;
+    ? `${this.apiBuscar}/buscar?filtro=${filtro}`
+    : `${this.apiBuscar}/listar`;
 
   return this.http.get<any[]>(url);
 }
